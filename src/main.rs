@@ -2,6 +2,10 @@ extern crate irc;
 
 use irc::client::prelude::*;
 
+fn decorate(msg: &str) -> String {
+    String::from("Archinbald Bot: ") + msg
+}
+
 fn main() {
     let server = IrcServer::new("config.json").unwrap();
     server.identify().unwrap();
@@ -14,10 +18,10 @@ fn main() {
                     server.send_privmsg(target, "I'm right here...oh, sorry...PONG!").unwrap();
                 }
                 if msg.contains("archinbald echo") {
-                    server.send_privmsg(target, msg.split_at(15).1).unwrap();
+                    server.send_privmsg(target, decorate(msg.split_at(15).1).as_str()).unwrap();
                 }
                 if msg.contains("archinbald info") {
-                    server.send_privmsg(target, "I am Archinbald, your faithful ACM assistant. Currently running v0.1.3. Written in :rust: with :heart: by :logoilab:.").unwrap();
+                    server.send_privmsg(target, "I am Archinbald, your faithful ACM assistant. Currently running v0.1.4. Written in :rust: with :heart: by :logoilab:.").unwrap();
                 }
             },
             _ => (),
