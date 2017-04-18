@@ -1,7 +1,8 @@
 [package]
 name = "Archinbald"
-version = "0.1.4"
+version = "0.1.5"
 authors = ["Chad Baxter <cbaxter@mail.umw.edu>"]
 
 [dependencies]
+chrono = "*"
 irc = "*"
