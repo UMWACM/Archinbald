@@ -1,10 +1,18 @@
 extern crate chrono;
 extern crate irc;
-
+extern crate rand;
 
 use chrono::Local;
 
 use irc::client::prelude::*;
+
+use rand::{thread_rng, Rng};
+
+use std::error::Error;
+use std::fs::File;
+use std::io::BufReader;
+use std::io::prelude::*;
+use std::path::Path;
 
 fn decorate(msg: &str) -> String {
     String::from("Archinbald Bot: ") + msg
@@ -25,7 +33,7 @@ fn main() {
                     server.send_privmsg(target, decorate(msg.split_at(15).1).as_str()).unwrap();
                 }
                 if msg.contains("@archinbald info") {
-                    server.send_privmsg(target, decorate("I am Archinbald, your faithful ACM assistant. Currently running v0.1.6. Written in :rust: with :heart: by :logoilab:.").as_str()).unwrap();
+                    server.send_privmsg(target, decorate("I am Archinbald, your faithful ACM assistant. Currently running v0.1.7. Written in :rust: with :heart: by :logoilab:.").as_str()).unwrap();
                 }
                 if msg.contains("@archinbald time") {
                     server.send_privmsg(target, decorate(Local::now().to_string().as_str()).as_str()).unwrap();
@@ -41,6 +49,19 @@ fn main() {
                             server.send_privmsg(target, decorate("What is that rubbish password!?").as_str()).unwrap();
                         }
                     }
+                }
+                if msg.contains("@archinbald quoteme") {
+                    let file = match File::open(Path::new("quotes.txt")) {
+                        Err(e) => panic!("couldn't open quote file\n{}", e),
+                        Ok(file) => file,
+                    };
+
+                    let mut reader = BufReader::new(file);
+                    let mut lines = String::new();
+                    reader.read_to_string(&mut lines).unwrap();
+                    let lines_vec: Vec<&str> = lines.split("\n").collect();
+                    let rand_num: usize = thread_rng().gen_range(0, lines_vec.len());
+                    server.send_privmsg(target, lines_vec.get(rand_num).unwrap()).unwrap();
                 }
             },
             _ => (),
