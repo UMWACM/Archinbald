@@ -25,6 +25,9 @@ fn main() {
         print!("{}", message);
         match message.command {
             Command::PRIVMSG(ref target, ref msg) => {
+                if msg.contains("@archinbald help") {
+                    server.send_privmsg(target, decorate(server.config().get_option("help")).as_str()).unwrap();
+                }
                 if msg.contains("@archinbald ping") {
                     server.send_privmsg(target, decorate("I'm right here...oh, sorry...PONG!").as_str()).unwrap();
                 }
@@ -32,7 +35,7 @@ fn main() {
                     server.send_privmsg(target, decorate(msg.split_at(17).1).as_str()).unwrap();
                 }
                 if msg.contains("@archinbald info") {
-                    server.send_privmsg(target, decorate("I am Archinbald, your faithful ACM assistant. Currently running v0.1.7. Written in :rust: with :heart: by :logoilab:.").as_str()).unwrap();
+                    server.send_privmsg(target, decorate("I am Archinbald, your faithful ACM assistant. Currently running v0.1.8. Written in :rust: with :heart: by :logoilab:.").as_str()).unwrap();
                 }
                 if msg.contains("@archinbald time") {
                     server.send_privmsg(target, decorate(Local::now().to_string().as_str()).as_str()).unwrap();

@@ -21,6 +21,7 @@
   "ping_time": 180,
   "ping_timeout": 10,
   "options": {
+    "help": "\nhelp\tPrints this info.\nping\tSee if the bot is active.\necho <message>\tSend a message as the bot.\ninfo\tDisplays info about the bot.\ntime\tDisplays the current time.\nquoteme\tDisplays a randomly chose quote.\nstop <password>\tStops the bot.",
     "stop_pass": "password_used_with_stop_command"
   }
 }
