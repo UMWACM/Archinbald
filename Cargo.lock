@@ -1,5 +1,5 @@
 [root]
-name = "Archinbald"
+name = "archinbald"
 version = "0.1.5"
 dependencies = [
  "chrono 0.3.0 (registry+https://github.com/rust-lang/crates.io-index)",
