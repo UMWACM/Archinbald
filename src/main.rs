@@ -8,7 +8,6 @@ use irc::client::prelude::*;
 
 use rand::{thread_rng, Rng};
 
-use std::error::Error;
 use std::fs::File;
 use std::io::BufReader;
 use std::io::prelude::*;
@@ -30,7 +29,7 @@ fn main() {
                     server.send_privmsg(target, decorate("I'm right here...oh, sorry...PONG!").as_str()).unwrap();
                 }
                 if msg.contains("@archinbald echo") {
-                    server.send_privmsg(target, decorate(msg.split_at(15).1).as_str()).unwrap();
+                    server.send_privmsg(target, decorate(msg.split_at(17).1).as_str()).unwrap();
                 }
                 if msg.contains("@archinbald info") {
                     server.send_privmsg(target, decorate("I am Archinbald, your faithful ACM assistant. Currently running v0.1.7. Written in :rust: with :heart: by :logoilab:.").as_str()).unwrap();
