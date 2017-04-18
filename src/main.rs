@@ -25,10 +25,22 @@ fn main() {
                     server.send_privmsg(target, decorate(msg.split_at(15).1).as_str()).unwrap();
                 }
                 if msg.contains("@archinbald info") {
-                    server.send_privmsg(target, decorate("I am Archinbald, your faithful ACM assistant. Currently running v0.1.5. Written in :rust: with :heart: by :logoilab:.").as_str()).unwrap();
+                    server.send_privmsg(target, decorate("I am Archinbald, your faithful ACM assistant. Currently running v0.1.6. Written in :rust: with :heart: by :logoilab:.").as_str()).unwrap();
                 }
                 if msg.contains("@archinbald time") {
                     server.send_privmsg(target, decorate(Local::now().to_string().as_str()).as_str()).unwrap();
+                }
+                if msg.contains("@archinbald stop") {
+                    if msg.len() == 16 {
+                        server.send_privmsg(target, decorate("What is the password?").as_str()).unwrap();
+                    } else {
+                        if msg.contains(server.config().get_option("stop_pass")) {
+                            server.send_privmsg(target, decorate("Okay...goodby cruel world.").as_str()).unwrap();
+                            panic!("User forced stop.");
+                        } else {
+                            server.send_privmsg(target, decorate("What is that rubbish password!?").as_str()).unwrap();
+                        }
+                    }
                 }
             },
             _ => (),
