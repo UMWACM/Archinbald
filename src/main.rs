@@ -14,14 +14,13 @@ use std::io::prelude::*;
 use std::path::Path;
 
 fn decorate(msg: &str) -> String {
-    String::from("Archinbald Bot: ") + msg
+    String::from(":robot_face: ") + msg
 }
 
 fn main() {
     let server = IrcServer::new("config.json").unwrap();
     server.identify().unwrap();
-    for message in server.iter() {
-        let message = message.unwrap();
+    server.for_each_incoming(|message| {
         print!("{}", message);
         match message.command {
             Command::PRIVMSG(ref target, ref msg) => {
@@ -33,6 +32,15 @@ fn main() {
                 }
                 if msg.contains("@archinbald echo") {
                     server.send_privmsg(target, decorate(msg.split_at(17).1).as_str()).unwrap();
+                }
+                if msg.contains("bless up") || msg.contains("blessup") || msg.contains("bless up!") {
+                    server.send_privmsg(target, decorate("Bless Up!!!").as_str()).unwrap();
+                }
+                if msg.contains("RIP") {
+                    server.send_privmsg(target, decorate("R I P E R O N I").as_str()).unwrap();
+                }
+                if msg.contains("WTF") {
+                    server.send_privmsg(target, decorate("ThIs Is A cHrIsTiAn MiNeCrAfT sErVeR!").as_str()).unwrap();
                 }
                 if msg.contains("@archinbald info") {
                     server.send_privmsg(target, decorate("I am Archinbald, your faithful ACM assistant. Currently running v0.1.8. Written in :rust: with :heart: by :logoilab:.").as_str()).unwrap();
@@ -68,5 +76,5 @@ fn main() {
             },
             _ => (),
         }
-    }
+    });
 }
